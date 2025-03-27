@@ -1,0 +1,33 @@
+name: Release IOS LeroyMerlin Homolog
+on: 
+  push:
+    - chore/workflow-build-app
+jobs:
+  build:
+    name: build
+    runs-on: macos-13
+    steps:        
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+      - name: 🏗 Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      
+      - name: 🏗 Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7' 
+          bundler-cache: true 
+      
+      - name: 🔧 Bundle install Gemfile
+        timeout-minutes: 5
+        run: bundle install
+        
+      - name: 🔧 build and upload 
+        run: bundle exec fastlane ios deploy_hml app_scheme:"CartaoPNB_Homolog" bundle_id:"com.empresa.meuapp"
+       # env:
+       #   GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
