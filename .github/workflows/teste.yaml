@@ -1,7 +1,8 @@
 name: Release IOS LeroyMerlin Homolog
 on: 
   push:
-    - chore/workflow-build-app
+    branches:
+      - main
 jobs:
   build:
     name: build
